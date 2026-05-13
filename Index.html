@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cris Travel</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A843;
+    --rose: #E8758A;
+    --dark: #0d0d0d;
+    --card: #1a1a1a;
+    --text: #f0ece4;
+    --muted: #888;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 20% 20%, rgba(212,168,67,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(232,117,138,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 48px 24px 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .logo-wrap {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    padding: 3px;
+    animation: spin-slow 20s linear infinite;
+  }
+  .logo-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold) 0%, #f0d080 50%, var(--rose) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .tagline {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 16px auto 0;
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: var(--card);
+    border: 1px solid rgba(212,168,67,0.15);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+  .link-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,168,67,0.05), rgba(232,117,138,0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .link-btn:hover { border-color: rgba(212,168,67,0.4); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(212,168,67,0.1); }
+  .link-btn:hover::before { opacity: 1; }
+  .link-btn:nth-child(1) { animation-delay: 0.1s; }
+  .link-btn:nth-child(2) { animation-delay: 0.2s; }
+  .link-btn:nth-child(3) { animation-delay: 0.3s; }
+  .link-btn:nth-child(4) { animation-delay: 0.4s; }
+  .link-btn:nth-child(5) { animation-delay: 0.5s; }
+  .link-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-wa { background: rgba(37,211,102,0.15); }
+  .icon-ig { background: rgba(232,117,138,0.15); }
+  .icon-disney { background: rgba(0,100,200,0.15); }
+  .icon-quote { background: rgba(212,168,67,0.15); }
+  .icon-cert { background: rgba(150,80,200,0.15); }
+  .link-text { flex: 1; }
+  .link-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+  .link-sub { font-size: 0.75rem; color: var(--muted); font-weight: 300; }
+  .arrow { color: var(--gold); font-size: 18px; opacity: 0.6; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    animation: fadeUp 0.6s 0.6s ease both;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.7s ease both;
+  }
+  .chip {
+    padding: 8px 16px;
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    color: var(--text);
+    background: rgba(212,168,67,0.05);
+    letter-spacing: 0.5px;
+  }
+  .footer {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    animation: fadeUp 0.6s 0.8s ease both;
+  }
+  .footer span {
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-inner">CRIS<br>TRAVEL</div>
+    </div>
+    <h1 class="name">Cris Travel</h1>
+    <p class="tagline">Certified Travel Designer</p>
+    <div class="divider"></div>
+  </div>
+  <div class="links">
+    <a href="https://wa.me/50766187636" class="link-btn">
+      <div class="link-icon icon-wa">💬</div>
+      <div class="link-text">
+        <div class="link-title">Cotiza tu viaje</div>
+        <div class="link-sub">Escríbenos por WhatsApp</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a href="https://www.instagram.com/cristravelpa" class="link-btn">
+      <div class="link-icon icon-ig">📸</div>
+      <div class="link-text">
+        <div class="link-title">Instagram</div>
+        <div class="link-sub">Síguenos para inspiración de viajes</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a href="https://wa.me/50766187636?text=Hola!%20Quiero%20info%20sobre%20Disney" class="link-btn">
+      <div class="link-icon icon-disney">🏰</div>
+      <div class="link-text">
+        <div class="link-title">Paquetes Disney & Universal</div>
+        <div class="link-sub">Agentes autorizados IATA</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a href="https://wa.me/50766187636?text=Hola!%20Quiero%20una%20cotizaci%C3%B3n%20personalizada" class="link-btn">
+      <div class="link-icon icon-quote">✈️</div>
+      <div class="link-text">
+        <div class="link-title">Cotización personalizada</div>
+        <div class="link-sub">Diseñamos tu experiencia ideal</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a href="https://wa.me/50766187636?text=Hola!%20Quiero%20info%20sobre%20la%20certificaci%C3%B3n%20de%20agente%20de%20viajes" class="link-btn">
+      <div class="link-icon icon-cert">🎓</div>
+      <div class="link-text">
+        <div class="link-title">Certifícate como Agente</div>
+        <div class="link-sub">Construye tu propio negocio de viajes</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+  </div>
+  <p class="section-title">Nos especializamos en</p>
+  <div class="chips">
+    <span class="chip">🏰 Disney</span>
+    <span class="chip">🎡 Universal</span>
+    <span class="chip">🚢 Royal Caribbean</span>
+    <span class="chip">🇨🇭 Suiza</span>
+    <span class="chip">🇨🇷 Costa Rica</span>
+    <span class="chip">🇵🇦 Panamá</span>
+    <span class="chip">🌍 Y más destinos</span>
+  </div>
+  <div class="footer">
+    Diseñamos experiencias únicas · <span>Cris Travel</span><br>
+    Agentes certificados IATA
+  </div>
+</div>
+</body>
+</html>
